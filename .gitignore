@@ -10,7 +10,6 @@ yarn.lock
 package-lock.json
 __pycache__
 uv.lock
-README.md
 
 # Logs
 logs
