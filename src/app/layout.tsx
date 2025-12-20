@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { HeroUIProvider } from "@heroui/react";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "南网智能体v1.0",
-  description: "南网智能体v1.0",
+  title: "General Agent",
+  description: "General Agent",
 };
 
 export default function RootLayout({
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
-        {children}
+        <HeroUIProvider>
+          {children}
+        </HeroUIProvider>
       </body>
     </html>
   );
