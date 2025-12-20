@@ -538,6 +538,11 @@ export default function Home() {
                   }}
                   placeholder="请选择知识库"
                   labelPlacement="outside"
+                  classNames={{
+                    base: "rounded-xl",
+                    trigger: "rounded-xl",
+                    popoverContent: "rounded-xl",
+                  }}
                 >
                   {knowledgeBases.map((kb) => (
                     <SelectItem key={kb.id.toString()} value={kb.id.toString()}>
@@ -556,11 +561,17 @@ export default function Home() {
                   setNewKbDescription("");
                 }}
                 size="md"
+                classNames={{
+                  base: "rounded-2xl",
+                  backdrop: "bg-black/50 backdrop-opacity-40",
+                  header: "border-b border-slate-200",
+                  footer: "border-t border-slate-200",
+                }}
               >
-                <ModalContent>
+                <ModalContent className="rounded-2xl">
                   <ModalHeader>
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="p-3 rounded-xl bg-blue-600 shadow-md">
+                      <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 shadow-md">
                         <BookOpen className="h-5 w-5 text-white" />
                       </div>
                       <div className="flex-1">
@@ -587,6 +598,7 @@ export default function Home() {
                               createKnowledgeBase();
                             }
                           }}
+                          className="rounded-xl"
                         />
                         <p className="text-xs text-slate-500">
                           知识库名称用于标识和管理您的文档集合
@@ -602,6 +614,7 @@ export default function Home() {
                           value={newKbDescription}
                           onValueChange={setNewKbDescription}
                           minRows={3}
+                          className="rounded-xl"
                         />
                         <p className="text-xs text-slate-500">
                           添加描述可以帮助您更好地组织和识别知识库
@@ -613,6 +626,7 @@ export default function Home() {
                     <Button 
                       variant="light" 
                       onPress={() => setIsCreateDialogOpen(false)}
+                      className="rounded-xl"
                     >
                       取消
                     </Button>
@@ -621,6 +635,7 @@ export default function Home() {
                       isDisabled={!newKbName.trim()}
                       color="primary"
                       startContent={<Plus className="h-4 w-4" />}
+                      className="rounded-xl"
                     >
                       创建知识库
                     </Button>
@@ -629,7 +644,7 @@ export default function Home() {
               </Modal>
 
               <Button 
-                className="w-full gap-2 bg-purple-700 text-white hover:bg-purple-800 shadow-md mb-4"
+                className="w-full gap-2 bg-gradient-to-br from-purple-700 to-purple-800 text-white hover:from-purple-800 hover:to-purple-900 shadow-md mb-4 rounded-xl transition-all duration-200 hover:shadow-lg"
                 onPress={() => setIsCreateDialogOpen(true)}
                 startContent={<Plus className="h-4 w-4" />}
               >
@@ -642,7 +657,7 @@ export default function Home() {
                   {knowledgeBases.map((kb) => (
                     <Card
                       key={kb.id}
-                      className={`cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md ${
+                      className={`cursor-pointer transition-all duration-200 shadow-sm hover:shadow-md rounded-xl ${
                         selectedKbId === kb.id 
                           ? "border-2 border-blue-600 bg-blue-100 shadow-md" 
                           : "border border-slate-200 hover:border-blue-400 bg-white"
@@ -663,7 +678,7 @@ export default function Home() {
                             variant="light"
                             size="sm"
                             isIconOnly
-                            className="h-8 w-8 hover:bg-red-50 hover:text-red-600 transition-colors"
+                            className="h-8 w-8 hover:bg-red-50 hover:text-red-600 transition-colors rounded-lg"
                             onPress={() => {
                               deleteKnowledgeBase(kb.id);
                             }}
@@ -690,8 +705,8 @@ export default function Home() {
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {messages.length === 0 && (
                 <div className="flex items-center justify-center h-full">
-                  <div className="text-center p-8 rounded-2xl bg-blue-100 border border-blue-200 shadow-soft">
-                    <div className="p-4 rounded-full bg-blue-600 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <div className="text-center p-8 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 shadow-soft">
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 w-16 h-16 mx-auto mb-4 flex items-center justify-center shadow-md">
                       <MessageCircle className="h-8 w-8 text-white" />
                     </div>
                     <p className="text-slate-600 font-medium">开始对话吧！选择一个知识库后输入您的问题。</p>
@@ -703,9 +718,9 @@ export default function Home() {
                   key={idx}
                   className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
                 >
-                  <Card className={`max-w-3xl shadow-elegant ${
+                  <Card className={`max-w-3xl shadow-elegant rounded-2xl ${
                     msg.role === "user" 
-                      ? "bg-blue-700 text-white border-0" 
+                      ? "bg-gradient-to-br from-blue-700 to-blue-800 text-white border-0" 
                       : "bg-white border-slate-200"
                   }`}>
                     <CardBody className="p-5">
@@ -731,7 +746,7 @@ export default function Home() {
                       <Button
                         variant="bordered"
                         size="sm"
-                        className="text-xs bg-white border-blue-300 text-blue-800 hover:bg-blue-100 hover:border-blue-400 shadow-sm"
+                        className="text-xs bg-white border-blue-300 text-blue-800 hover:bg-blue-100 hover:border-blue-400 shadow-sm rounded-lg"
                         onPress={async () => {
                           try {
                             // 确保只取第一个文档（匹配度最高的，且是问答中实际使用的）
@@ -806,14 +821,14 @@ export default function Home() {
                   onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
                   placeholder="输入您的问题..."
                   isDisabled={isLoading || !selectedKbId}
-                  className="flex-1 h-16 text-base border-slate-200 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-300 bg-white rounded-xl"
+                  className="flex-1 h-16 text-base border-slate-200 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-300 bg-white rounded-2xl"
                 />
                 <Button
                   onPress={sendMessage}
                   isDisabled={isLoading || !selectedKbId}
                   isIconOnly
                   size="lg"
-                  className="h-16 w-16 bg-blue-700 hover:bg-blue-800 text-white shadow-md rounded-xl transition-all duration-200"
+                  className="h-16 w-16 bg-gradient-to-br from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white shadow-md rounded-2xl transition-all duration-200 hover:scale-105"
                 >
                   <Send className="h-5 w-5" />
                 </Button>
@@ -824,7 +839,7 @@ export default function Home() {
           <div className="flex-1 overflow-y-auto p-6">
             {selectedKbId ? (
               <div className="space-y-6">
-                <div className="flex items-center justify-between p-6 rounded-xl bg-white border border-slate-200 shadow-elegant">
+                <div className="flex items-center justify-between p-6 rounded-2xl bg-white border border-slate-200 shadow-elegant">
                   <div>
                     <h2 className="text-2xl font-bold text-blue-700">
                       {knowledgeBases.find((kb) => kb.id === selectedKbId)?.name}
@@ -835,7 +850,7 @@ export default function Home() {
                     </p>
                   </div>
                   <label>
-                    <Button asChild variant="outline" className="bg-blue-700 text-white hover:bg-blue-800 border-0 shadow-md">
+                    <Button asChild variant="outline" className="bg-gradient-to-br from-blue-700 to-blue-800 text-white hover:from-blue-800 hover:to-blue-900 border-0 shadow-md rounded-xl transition-all duration-200 hover:shadow-lg">
                       <span>
                         <Upload className="h-4 w-4 mr-2" />
                         上传文档
@@ -855,13 +870,13 @@ export default function Home() {
                   </label>
                 </div>
 
-                <Separator className="bg-slate-200" />
+                <Divider className="bg-slate-200" />
 
                 <div className="space-y-3">
                   {documents.length === 0 ? (
-                    <Card className="border-2 border-dashed border-slate-300 bg-slate-50">
+                    <Card className="border-2 border-dashed border-slate-300 bg-slate-50 rounded-xl">
                       <CardBody className="p-12 text-center">
-                        <div className="p-4 rounded-full bg-blue-200 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <div className="p-4 rounded-2xl bg-blue-200 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                           <FileText className="h-8 w-8 text-blue-700" />
                         </div>
                         <p className="text-slate-600 font-medium">暂无文档，请上传文档</p>
@@ -869,18 +884,18 @@ export default function Home() {
                     </Card>
                   ) : (
                     documents.map((doc) => (
-                      <Card key={doc.id} className="shadow-elegant hover:shadow-md transition-shadow border-slate-200">
+                      <Card key={doc.id} className="shadow-elegant hover:shadow-md transition-shadow border-slate-200 rounded-xl">
                         <CardBody>
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <div className="p-1.5 rounded-lg bg-blue-200">
+                                <div className="p-1.5 rounded-xl bg-blue-200">
                                   <FileText className="h-5 w-5 text-blue-700" />
                                 </div>
                                 <h3 className="text-lg font-semibold text-slate-800">{doc.name}</h3>
                               </div>
                               <div className="flex items-center gap-4 text-sm text-slate-600 ml-9">
-                                <span className="px-2 py-0.5 rounded bg-slate-100">{doc.file_type}</span>
+                                <span className="px-2 py-0.5 rounded-lg bg-slate-100">{doc.file_type}</span>
                                 <span>{(doc.file_size / 1024).toFixed(2)} KB</span>
                                 <span>{doc.chunk_count} 个分块</span>
                                 {getStatusBadge(doc.status)}
@@ -893,7 +908,7 @@ export default function Home() {
                                   size="sm"
                                   onPress={() => startParseDocument(doc.id)}
                                   isDisabled={parsingDocId === doc.id}
-                                  className="bg-blue-600 text-white hover:bg-blue-700 border-0 shadow-sm"
+                                  className="bg-gradient-to-br from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 border-0 shadow-sm rounded-lg transition-all duration-200"
                                   startContent={parsingDocId === doc.id ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                                 >
                                   {parsingDocId === doc.id ? "解析中..." : "开始解析"}
@@ -905,7 +920,7 @@ export default function Home() {
                                   size="sm"
                                   onPress={() => startParseDocument(doc.id)}
                                   isDisabled={parsingDocId === doc.id}
-                                  className="bg-orange-600 text-white hover:bg-orange-700 border-0 shadow-sm"
+                                  className="bg-gradient-to-br from-orange-600 to-orange-700 text-white hover:from-orange-700 hover:to-orange-800 border-0 shadow-sm rounded-lg transition-all duration-200"
                                   startContent={parsingDocId === doc.id ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                                 >
                                   {parsingDocId === doc.id ? "解析中..." : "重新解析"}
@@ -917,14 +932,14 @@ export default function Home() {
                                   size="sm"
                                   onPress={() => reparseDocument(doc.id)}
                                   isDisabled={parsingDocId === doc.id}
-                                  className="bg-green-600 text-white hover:bg-green-700 border-0 shadow-sm"
+                                  className="bg-gradient-to-br from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 border-0 shadow-sm rounded-lg transition-all duration-200"
                                   startContent={parsingDocId === doc.id ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                                 >
                                   {parsingDocId === doc.id ? "重新解析中..." : "重新解析"}
                                 </Button>
                               )}
                               {doc.status === "processing" && (
-                                <div className="flex items-center gap-2 text-sm text-blue-700 px-3 py-1.5 rounded-lg bg-blue-100">
+                                <div className="flex items-center gap-2 text-sm text-blue-700 px-3 py-1.5 rounded-xl bg-blue-100">
                                   <Loader2 className="h-4 w-4 animate-spin" />
                                   <span>解析中...</span>
                                 </div>
@@ -934,7 +949,7 @@ export default function Home() {
                                 size="sm"
                                 isIconOnly
                                 onPress={() => deleteDocument(doc.id)}
-                                className="hover:bg-red-50 hover:text-red-600 transition-colors"
+                                className="hover:bg-red-50 hover:text-red-600 transition-colors rounded-lg"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
@@ -947,9 +962,9 @@ export default function Home() {
                 </div>
               </div>
             ) : (
-              <Card className="border-2 border-dashed border-slate-300 bg-slate-50">
+              <Card className="border-2 border-dashed border-slate-300 bg-slate-50 rounded-xl">
                 <CardBody className="p-12 text-center">
-                  <div className="p-4 rounded-full bg-indigo-200 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <div className="p-4 rounded-2xl bg-indigo-200 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                     <BookOpen className="h-8 w-8 text-indigo-700" />
                   </div>
                   <p className="text-slate-600 font-medium">请先选择一个知识库</p>
